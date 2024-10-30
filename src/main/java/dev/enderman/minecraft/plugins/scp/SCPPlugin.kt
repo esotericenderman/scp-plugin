@@ -8,17 +8,17 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class SCPPlugin : JavaPlugin(), CustomItemPlugin {
 
-    override lateinit var customItemManager : CustomItemManager
+  override lateinit var customItemManager: CustomItemManager
 
-    override fun onEnable() {
-        customItemManager = CustomItemManager(this)
+  override fun onEnable() {
+    customItemManager = CustomItemManager(this)
 
-        dataFolder.mkdir()
-        saveDefaultConfig()
+    dataFolder.mkdir()
+    saveDefaultConfig()
 
-        val commandAPIConfig = CommandAPIBukkitConfig(this)
+    val commandAPIConfig = CommandAPIBukkitConfig(this)
 
-        CommandAPI.onLoad(commandAPIConfig)
-        CommandAPI.onEnable()
-    }
+    CommandAPI.onLoad(commandAPIConfig)
+    CommandAPI.onEnable()
+  }
 }

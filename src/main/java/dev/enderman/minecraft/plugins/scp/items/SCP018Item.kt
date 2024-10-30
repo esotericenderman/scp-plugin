@@ -10,9 +10,8 @@ import org.bukkit.inventory.ItemStack
 
 class SCP018Item(plugin: SCPPlugin) : CustomItem(plugin, "scp_018", Material.SNOWBALL) {
   override fun generateCustomItem(baseCustomItem: ItemStack, player: Player): ItemStack {
-    baseCustomItem.editMeta {
-        meta ->
-        meta.displayName(Component.text("SCP-018").color(NamedTextColor.RED))
+    baseCustomItem.editMeta { meta ->
+      meta.displayName(Component.text("SCP-018").color(NamedTextColor.RED))
     }
 
     return baseCustomItem

@@ -13,9 +13,9 @@ plugins {
   kotlin("jvm")
 }
 
-description = "A template repository for easily developing Minecraft Paper plugins."
+description = "A Minecraft Paper plugin that adds some SCPs to the game."
 
-group = "foundation.esoteric"
+group = "dev.enderman"
 version = "0.0.1"
 
 val projectGroupString = group.toString()
@@ -64,15 +64,15 @@ tasks {
 }
 
 bukkitPluginYaml {
-  name = "PaperTemplate"
+  name = "SCP"
   description = project.description
 
-  authors = listOfNotNull("Esoteric Foundation", "Esoteric Enderman")
+  authors = listOfNotNull("Esoteric Enderman")
 
   setVersion(project.version)
 
   apiVersion = paperApiMinecraftVersion
-  main = "${project.group}.minecraft.plugins.template.PaperTemplatePlugin"
+  main = "${project.group}.minecraft.plugins.scp.SCPPlugin"
 
   load = BukkitPluginYaml.PluginLoadOrder.STARTUP
 }

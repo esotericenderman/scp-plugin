@@ -1,10 +1,10 @@
-package foundation.esoteric.minecraft.plugins.template
+package dev.enderman.minecraft.plugins.scp
 
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIBukkitConfig
 import org.bukkit.plugin.java.JavaPlugin
 
-class PaperTemplatePlugin : JavaPlugin() {
+class SCPPlugin : JavaPlugin() {
     override fun onEnable() {
         dataFolder.mkdir()
         saveDefaultConfig()

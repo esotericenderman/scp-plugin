@@ -1,5 +1,6 @@
 package dev.enderman.minecraft.plugins.scp
 
+import dev.enderman.minecraft.plugins.scp.entities.SCP018Entity
 import dev.enderman.minecraft.plugins.scp.items.SCP018Item
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIBukkitConfig
@@ -17,6 +18,7 @@ class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin {
 
   override fun onEnable() {
     customItemManager = CustomItemManager(this)
+    customEntityManager = CustomEntityManager(this)
 
     dataFolder.mkdir()
     saveDefaultConfig()
@@ -27,6 +29,7 @@ class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin {
     CommandAPI.onEnable()
 
     SCP018Item(this)
+    SCP018Entity(this)
 
     GiveCustomItemCommand(this)
   }

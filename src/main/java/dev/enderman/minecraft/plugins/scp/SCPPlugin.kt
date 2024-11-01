@@ -7,16 +7,26 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig
 import foundation.esoteric.minecraft.plugins.library.commands.GiveCustomItemCommand
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntityManager
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntityPlugin
+import foundation.esoteric.minecraft.plugins.library.file.FileManagedPlugin
+import foundation.esoteric.minecraft.plugins.library.file.FileManager
 import foundation.esoteric.minecraft.plugins.library.item.CustomItemManager
 import foundation.esoteric.minecraft.plugins.library.item.CustomItemPlugin
+import foundation.esoteric.minecraft.plugins.library.resourcepack.ResourcePackListener
+import foundation.esoteric.minecraft.plugins.library.resourcepack.ResourcePackManager
+import foundation.esoteric.minecraft.plugins.library.resourcepack.ResourcePackPlugin
+import foundation.esoteric.minecraft.plugins.library.resourcepack.ResourcePackServer
 import org.bukkit.plugin.java.JavaPlugin
 
-class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin {
+class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin, FileManagedPlugin, ResourcePackPlugin {
 
+  override lateinit var fileManager: FileManager
+  override lateinit var resourcePackManager: ResourcePackManager
   override lateinit var customItemManager: CustomItemManager
   override lateinit var customEntityManager: CustomEntityManager
 
   override fun onEnable() {
+    fileManager = FileManager(this)
+
     customItemManager = CustomItemManager(this)
     customEntityManager = CustomEntityManager(this)
 
@@ -30,6 +40,10 @@ class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin {
 
     SCP018Item(this)
     SCP018Entity(this)
+
+    resourcePackManager = ResourcePackManager(this)
+    val resourcePackServer = ResourcePackServer(this)
+    ResourcePackListener(this, resourcePackServer)
 
     GiveCustomItemCommand(this)
   }

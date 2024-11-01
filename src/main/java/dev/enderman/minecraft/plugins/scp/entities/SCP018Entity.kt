@@ -30,6 +30,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
     if ((plugin as SCPPlugin).customItemManager.getItem("scp_018")!!.isItem(itemInMainHand)) {
       toEntity(entity)
+      entity.item = (plugin as SCPPlugin).customItemManager.getItem("scp_018")!!.toItem(entity.item)
     }
   }
 
@@ -53,6 +54,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
       }
 
       val newProjectile = createEntity(projectile.location)
+      newProjectile.item = (plugin as SCPPlugin).customItemManager.getItem("scp_018")!!.toItem(newProjectile.item)
       newProjectile.velocity = newVelocity
 
       projectile.remove()

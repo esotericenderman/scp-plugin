@@ -11,10 +11,10 @@ import foundation.esoteric.minecraft.plugins.library.file.FileManagedPlugin
 import foundation.esoteric.minecraft.plugins.library.file.FileManager
 import foundation.esoteric.minecraft.plugins.library.item.CustomItemManager
 import foundation.esoteric.minecraft.plugins.library.item.CustomItemPlugin
-import foundation.esoteric.minecraft.plugins.library.resourcepack.ResourcePackListener
-import foundation.esoteric.minecraft.plugins.library.resourcepack.ResourcePackManager
-import foundation.esoteric.minecraft.plugins.library.resourcepack.ResourcePackPlugin
-import foundation.esoteric.minecraft.plugins.library.resourcepack.ResourcePackServer
+import foundation.esoteric.minecraft.plugins.library.pack.resource.ResourcePackListener
+import foundation.esoteric.minecraft.plugins.library.pack.resource.ResourcePackManager
+import foundation.esoteric.minecraft.plugins.library.pack.resource.ResourcePackPlugin
+import foundation.esoteric.minecraft.plugins.library.pack.resource.ResourcePackServer
 import org.bukkit.plugin.java.JavaPlugin
 
 class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin, FileManagedPlugin, ResourcePackPlugin {

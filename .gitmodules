@@ -1,3 +1,3 @@
 [submodule "src/main/resources/SCPPluginResourcePack"]
-	path = src/main/resources/SCPPluginResourcePack
+	path = src/main/resources/SCPResourcePack
 	url = git@github.com:EsotericEnderman/scp-resource-pack.git

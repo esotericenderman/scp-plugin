@@ -9,6 +9,17 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.ProjectileHitEvent
 
 class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018", EntityType.SNOWBALL) {
+
+  override fun toEntity(vararg entities: Snowball): Array<out Snowball> {
+    super.toEntity(*entities)
+
+    val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
+
+    entities.forEach { entity -> entity.item =  scpItem.createItem()}
+
+    return entities
+  }
+
   @EventHandler
   fun onHit(event: ProjectileHitEvent) {
     val projectile = event.entity
@@ -34,9 +45,6 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
     val newVelocity = velocity.subtract(normalVector.multiply(2.0F * velocity.dot(normalVector)))
 
     val newProjectile = createEntity(projectile.location)
-    val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
-
-    newProjectile.item = scpItem.createItem()
     newProjectile.velocity = newVelocity
   }
 }

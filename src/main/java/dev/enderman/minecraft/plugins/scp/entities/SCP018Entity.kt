@@ -18,22 +18,25 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
     }
 
     val hitEntity = event.hitEntity
-    val hitBlock = event.hitBlock
 
     if (hitEntity != null) {
       event.isCancelled = true
       val velocity = projectile.velocity
       velocity.y *= -2.0F
       projectile.velocity = velocity
-    } else if (hitBlock != null) {
-      val hitFace = event.hitBlockFace!!
-      val normalVector = hitFace.direction
-      val velocity = projectile.velocity
-      val newVelocity = velocity.subtract(normalVector.multiply(2.0F * velocity.dot(normalVector)))
-      val newProjectile = createEntity(projectile.location)
-      val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
-      newProjectile.item = scpItem.createItem()
-      newProjectile.velocity = newVelocity
+      return
     }
+
+    val hitFace = event.hitBlockFace!!
+    val normalVector = hitFace.direction
+
+    val velocity = projectile.velocity
+    val newVelocity = velocity.subtract(normalVector.multiply(2.0F * velocity.dot(normalVector)))
+
+    val newProjectile = createEntity(projectile.location)
+    val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
+
+    newProjectile.item = scpItem.createItem()
+    newProjectile.velocity = newVelocity
   }
 }

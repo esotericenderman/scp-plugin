@@ -89,6 +89,7 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
 
         val previousPosition = previousPositionMap[it]
         if (previousPosition == null) {
+          println("No previous position found")
           previousPositionMap[it] = it.location.toVector()
           return
         }

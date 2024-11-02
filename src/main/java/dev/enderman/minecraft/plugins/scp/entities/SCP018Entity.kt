@@ -11,6 +11,7 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Snowball
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.ProjectileHitEvent
+import org.bukkit.scheduler.BukkitRunnable
 
 class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp_018", EntityType.SNOWBALL) {
   override fun toEntity(vararg entities: T): Array<out T> {
@@ -19,18 +20,9 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
     val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
     entities.forEach { (it as Snowball).item = scpItem.createItem() }
 
-    plugin.server.scheduler.runTaskTimer(plugin, {
-      ->
-      entities.forEach { entity ->
-        entity.world.spawnParticle(
-          Particle.BLOCK,
-          entity.location,
-          10,
-          0.5, 0.5, 0.5,
-          Material.REDSTONE_BLOCK.createBlockData()
-        )
-      }
-    }, 0L, 1L)
+    entities.forEach {
+      SCP018Runnable(it as Snowball).runTaskTimer(plugin, 0L, 1L)
+    }
 
     return entities
   }
@@ -78,5 +70,21 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
     newProjectile.velocity = newVelocity
 
     projectile.remove()
+  }
+
+  private class SCP018Runnable(private val entity: Snowball) : BukkitRunnable() {
+    override fun run() {
+      if (entity.isDead) {
+        cancel()
+      }
+
+      entity.world.spawnParticle(
+        Particle.BLOCK,
+        entity.location,
+        10,
+        0.5, 0.5, 0.5,
+        Material.REDSTONE_BLOCK.createBlockData()
+      )
+    }
   }
 }

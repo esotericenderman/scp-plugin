@@ -30,6 +30,7 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
     }
 
     println("Processing projectile hit event on tick: " + plugin.server.currentTick)
+    println("Current ball velocity: " + projectile.velocity)
 
     val hitEntity = event.hitEntity
 

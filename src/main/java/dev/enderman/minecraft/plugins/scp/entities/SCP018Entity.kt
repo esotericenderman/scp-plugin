@@ -3,6 +3,8 @@ package dev.enderman.minecraft.plugins.scp.entities
 import dev.enderman.minecraft.plugins.scp.SCPPlugin
 import dev.enderman.minecraft.plugins.scp.items.SCP018Item
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntity
+import org.bukkit.Material
+import org.bukkit.Particle
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
@@ -16,6 +18,19 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
 
     val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
     entities.forEach { entity -> (entity as Snowball).item = scpItem.createItem() }
+
+    plugin.server.scheduler.runTaskTimer(plugin, {
+      ->
+      entities.forEach { entity ->
+        entity.world.spawnParticle(
+          Particle.BLOCK,
+          entity.location,
+          10,
+          0.5, 0.5, 0.5,
+          Material.REDSTONE_BLOCK.createBlockData()
+        )
+      }
+    }, 0L, 1L)
 
     return entities
   }

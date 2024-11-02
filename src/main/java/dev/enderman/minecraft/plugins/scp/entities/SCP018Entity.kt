@@ -9,7 +9,6 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Snowball
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.ProjectileHitEvent
-import org.bukkit.util.Vector
 
 class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp_018", EntityType.SNOWBALL) {
   override fun toEntity(vararg entities: T): Array<out T> {

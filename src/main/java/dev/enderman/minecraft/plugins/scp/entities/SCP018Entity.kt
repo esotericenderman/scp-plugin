@@ -9,7 +9,7 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Snowball
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.ProjectileHitEvent
-import kotlin.math.max
+import org.bukkit.util.Vector
 
 class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp_018", EntityType.SNOWBALL) {
   override fun toEntity(vararg entities: T): Array<out T> {
@@ -58,6 +58,8 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
     if (newVelocity.length() > 7.5F) {
       newVelocity.normalize().multiply(7.5F)
     }
+
+    velocity.rotateAroundNonUnitAxis(Vector(Math.random() * 2F - 1F, Math.random() * 2F - 1F, Math.random() * 2F - 1F), Math.random() * 30F - 15F)
 
     val newProjectile = createEntity(projectile.location)
     newProjectile.velocity = newVelocity

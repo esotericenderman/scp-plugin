@@ -76,6 +76,7 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
         if (it.isDead) {
           cancel()
           scpEntity.allEntities.remove(it)
+          previousPositionMap.remove(it)
         }
 
         it.world.spawnParticle(
@@ -102,6 +103,7 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
         if (velocity < 0.05F && !it.location.block.isEmpty) {
           it.remove()
           scpEntity.allEntities.remove(it)
+          previousPositionMap.remove(it)
           cancel()
 
           val scpItem = plugin.customItemManager.getItem("scp_018") as SCP018Item

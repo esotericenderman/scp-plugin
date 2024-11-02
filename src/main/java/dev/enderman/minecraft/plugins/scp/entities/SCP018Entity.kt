@@ -55,8 +55,8 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
     val velocity = projectile.velocity
     val newVelocity = velocity.subtract(normalVector.multiply(2.0F * velocity.dot(normalVector)))
     newVelocity.multiply(3F/2F)
-    if (newVelocity.length() > 10.0F) {
-      newVelocity.normalize().multiply(10.0F)
+    if (newVelocity.length() > 7.5F) {
+      newVelocity.normalize().multiply(7.5F)
     }
 
     val newProjectile = createEntity(projectile.location)

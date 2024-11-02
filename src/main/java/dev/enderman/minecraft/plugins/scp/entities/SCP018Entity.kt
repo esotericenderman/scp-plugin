@@ -29,6 +29,8 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
       return
     }
 
+    println("Processing projectile hit event on tick: " + plugin.server.currentTick)
+
     val hitEntity = event.hitEntity
 
     event.isCancelled = true

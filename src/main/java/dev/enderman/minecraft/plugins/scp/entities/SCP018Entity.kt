@@ -3,21 +3,13 @@ package dev.enderman.minecraft.plugins.scp.entities
 import dev.enderman.minecraft.plugins.scp.SCPPlugin
 import dev.enderman.minecraft.plugins.scp.items.SCP018Item
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntity
-import org.bukkit.Location
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Snowball
 import org.bukkit.event.EventHandler
-import org.bukkit.event.entity.CreatureSpawnEvent
 import org.bukkit.event.entity.ProjectileHitEvent
 
 class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp_018", EntityType.SNOWBALL) {
-
-  override fun createEntity(spawnLocation: Location): T {
-    val entity = spawnLocation.world.spawnEntity(spawnLocation, EntityType.SNOWBALL, CreatureSpawnEvent.SpawnReason.DEFAULT, {entity -> toEntity(entity as T)}) as T
-    return entity
-  }
-
   override fun toEntity(vararg entities: T): Array<out T> {
     super.toEntity(*entities)
 

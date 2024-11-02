@@ -55,8 +55,8 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
     val velocity = projectile.velocity
     val newVelocity = velocity.subtract(normalVector.multiply(2.0F * velocity.dot(normalVector)))
     newVelocity.multiply(3F/2F)
-    if (newVelocity.length() > 7.5F) {
-      newVelocity.normalize().multiply(7.5F)
+    if (newVelocity.length() > 4F) {
+      newVelocity.normalize().multiply(4F)
     }
 
     velocity.rotateAroundNonUnitAxis(Vector(Math.random() * 2F - 1F, Math.random() * 2F - 1F, Math.random() * 2F - 1F), Math.random() * 30F - 15F)

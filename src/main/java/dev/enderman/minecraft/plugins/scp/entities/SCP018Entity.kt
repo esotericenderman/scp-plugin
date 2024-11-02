@@ -5,9 +5,11 @@ import dev.enderman.minecraft.plugins.scp.items.SCP018Item
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntity
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
+import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Snowball
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.ProjectileHitEvent
+import kotlin.math.max
 
 class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp_018", EntityType.SNOWBALL) {
   override fun toEntity(vararg entities: T): Array<out T> {
@@ -36,6 +38,12 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
 
       velocity.y *= -2.0F
       projectile.velocity = velocity
+
+      if (hitEntity is LivingEntity) {
+        val damageToDeal = projectile.velocity.length() * 20.0F
+        hitEntity.health = 0.0.coerceAtLeast(hitEntity.health - damageToDeal)
+      }
+
       return
     }
 

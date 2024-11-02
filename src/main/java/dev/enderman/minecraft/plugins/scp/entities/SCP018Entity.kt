@@ -17,7 +17,7 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
     super.toEntity(*entities)
 
     val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
-    entities.forEach { entity -> (entity as Snowball).item = scpItem.createItem() }
+    entities.forEach { (it as Snowball).item = scpItem.createItem() }
 
     plugin.server.scheduler.runTaskTimer(plugin, {
       ->

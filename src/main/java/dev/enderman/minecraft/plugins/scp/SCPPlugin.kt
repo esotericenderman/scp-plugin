@@ -15,6 +15,7 @@ import foundation.esoteric.minecraft.plugins.library.pack.resource.ResourcePackL
 import foundation.esoteric.minecraft.plugins.library.pack.resource.ResourcePackManager
 import foundation.esoteric.minecraft.plugins.library.pack.resource.ResourcePackPlugin
 import foundation.esoteric.minecraft.plugins.library.pack.resource.ResourcePackServer
+import org.bukkit.entity.Snowball
 import org.bukkit.plugin.java.JavaPlugin
 
 class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin, FileManagedPlugin, ResourcePackPlugin {
@@ -38,7 +39,7 @@ class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin, FileManage
     CommandAPI.onLoad(commandAPIConfig)
     CommandAPI.onEnable()
 
-    SCP018Entity(this)
+    SCP018Entity<Snowball>(this)
     SCP018Item(this)
 
     resourcePackManager = ResourcePackManager(this)

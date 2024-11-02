@@ -40,8 +40,7 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
       projectile.velocity = velocity
 
       if (hitEntity is LivingEntity) {
-        val damageToDeal = projectile.velocity.length() * 20.0F
-        hitEntity.damage(damageToDeal)
+        hitEntity.damage(projectile.velocity.length() * 20.0F)
       }
 
       return

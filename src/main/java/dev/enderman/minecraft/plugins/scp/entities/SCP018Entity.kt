@@ -31,7 +31,9 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
 
     if (hitEntity != null) {
       event.isCancelled = true
+
       val velocity = projectile.velocity
+
       velocity.y *= -2.0F
       projectile.velocity = velocity
       return

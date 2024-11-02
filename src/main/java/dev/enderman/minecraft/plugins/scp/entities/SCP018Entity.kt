@@ -86,13 +86,11 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
           Material.REDSTONE_BLOCK.createBlockData()
         )
 
-        val previousPosition = previousPositionMap[it]
-        if (previousPosition == null) {
-          previousPositionMap[it] = it.location.toVector()
-          return
-        }
+        val previousPosition = previousPositionMap[it] ?: return
 
         val velocity = it.location.toVector().distance(previousPosition)
+
+        previousPositionMap[it] = it.location.toVector()
 
         if (velocity < 0.05F && !it.location.block.isEmpty) {
           it.remove()

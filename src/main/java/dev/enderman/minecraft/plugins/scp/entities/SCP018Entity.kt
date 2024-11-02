@@ -59,7 +59,9 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
       newVelocity.normalize().multiply(4F)
     }
 
-    velocity.rotateAroundNonUnitAxis(Vector(Math.random() * 2F - 1F, Math.random() * 2F - 1F, Math.random() * 2F - 1F), Math.random() * 30F - 15F)
+    velocity.rotateAroundX(Math.toDegrees(Math.random() * 10F - 5F))
+    velocity.rotateAroundZ(Math.toDegrees(Math.random() * 10F - 5F))
+    velocity.rotateAroundY(Math.toDegrees(Math.random() * 10F - 5F))
 
     val newProjectile = createEntity(projectile.location)
     newProjectile.velocity = newVelocity

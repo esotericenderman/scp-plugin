@@ -37,35 +37,29 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
 
     val hitEntity = event.hitEntity
 
-    event.isCancelled = true
-
     if (hitEntity != null) {
-      val velocity = projectile.velocity
-
-      velocity.y *= -1.5F
-      projectile.velocity = velocity
-
       if (hitEntity is LivingEntity) {
         hitEntity.damage(projectile.velocity.length() * 5.0F)
       }
-
-      return
     }
 
-    val hitFace = event.hitBlockFace!!
-    val normalVector = hitFace.direction
+    val hitFace = event.hitBlockFace
+    if (hitFace != null) {
+      val normalVector = hitFace.direction
 
-    val velocity = projectile.velocity
-    val newVelocity = velocity.subtract(normalVector.multiply(2.0F * velocity.dot(normalVector)))
-    newVelocity.multiply(3F/2F)
-    if (newVelocity.length() > 4F) {
-      newVelocity.normalize().multiply(4F)
+      val velocity = projectile.velocity
+      val newVelocity = velocity.subtract(normalVector.multiply(2.0F * velocity.dot(normalVector)))
+      newVelocity.multiply(3F/2F)
+      if (newVelocity.length() > 4F) {
+        newVelocity.normalize().multiply(4F)
+      }
+
+      val newProjectile = createEntity(projectile.location)
+      newProjectile.velocity = newVelocity
+
+      event.isCancelled = true
+      projectile.remove()
     }
-
-    val newProjectile = createEntity(projectile.location)
-    newProjectile.velocity = newVelocity
-
-    projectile.remove()
   }
 
   private class SCP018Runnable(private val entity: Snowball) : BukkitRunnable() {

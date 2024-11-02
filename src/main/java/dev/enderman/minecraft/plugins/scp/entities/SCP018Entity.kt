@@ -13,19 +13,15 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.ProjectileHitEvent
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
-import kotlin.collections.HashMap
 
 class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp_018", EntityType.SNOWBALL) {
 
-  private val allEntities: MutableList<Entity> = mutableListOf()
-
-  private val previousPositionMap: Map<Snowball, Vector> = HashMap()
-  private val velocityMap: Map<Snowball, Vector> = HashMap()
+  private val allEntities: MutableList<Snowball> = mutableListOf()
 
   override fun toEntity(vararg entities: T): Array<out T> {
     super.toEntity(*entities)
 
-    entities.forEach { allEntities.add(it) }
+    entities.forEach { allEntities.add(it as Snowball) }
 
     val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
     entities.forEach { (it as Snowball).item = scpItem.createItem() }
@@ -72,6 +68,9 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
   }
 
   private class SCP018Runnable(private val plugin: SCPPlugin, private val scpEntity: SCP018Entity<Snowball>) : BukkitRunnable() {
+
+    private val previousPositionMap: MutableMap<Snowball, Vector> = HashMap()
+
     override fun run() {
       scpEntity.allEntities.forEach {
         if (it.isDead) {
@@ -86,7 +85,15 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
           Material.REDSTONE_BLOCK.createBlockData()
         )
 
-        if (it.velocity.lengthSquared() < 0.05F) {
+        val previousPosition = previousPositionMap[it]
+        if (previousPosition == null) {
+          previousPositionMap[it] = it.location.toVector()
+          return
+        }
+
+        val velocity = it.location.toVector().distance(previousPosition)
+
+        if (velocity < 0.05F && !it.location.block.isEmpty) {
           it.remove()
           cancel()
 

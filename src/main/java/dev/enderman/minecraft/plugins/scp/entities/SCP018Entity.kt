@@ -92,6 +92,9 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
 
         previousPositionMap[it] = it.location.toVector()
 
+        println("Velocity: " + velocity)
+        println("Is empty block: " + it.location.block.isEmpty)
+
         if (velocity < 0.05F && !it.location.block.isEmpty) {
           it.remove()
           scpEntity.allEntities.remove(it)

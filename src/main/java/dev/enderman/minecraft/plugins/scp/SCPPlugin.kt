@@ -38,8 +38,8 @@ class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin, FileManage
     CommandAPI.onLoad(commandAPIConfig)
     CommandAPI.onEnable()
 
-    val entity = SCP018Entity(this)
-    SCP018Item(this, entity)
+    SCP018Entity(this)
+    SCP018Item(this)
 
     resourcePackManager = ResourcePackManager(this)
     val resourcePackServer = ResourcePackServer(this)

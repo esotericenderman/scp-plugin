@@ -1,6 +1,7 @@
 package dev.enderman.minecraft.plugins.scp.entities
 
 import dev.enderman.minecraft.plugins.scp.SCPPlugin
+import dev.enderman.minecraft.plugins.scp.items.SCP018Item
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Snowball
@@ -30,6 +31,8 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
       val velocity = projectile.velocity
       val newVelocity = velocity.subtract(normalVector.multiply(2.0F * velocity.dot(normalVector)))
       val newProjectile = createEntity(projectile.location)
+      val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
+      newProjectile.item = scpItem.createItem()
       newProjectile.velocity = newVelocity
     }
   }

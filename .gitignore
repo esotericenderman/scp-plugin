@@ -144,3 +144,6 @@ script-dist
 # Pycache Files
 __pycache__
 *.pyc
+
+# Kotlin compiler files
+.kotlin/sessions/kotlin-compiler-*.salive

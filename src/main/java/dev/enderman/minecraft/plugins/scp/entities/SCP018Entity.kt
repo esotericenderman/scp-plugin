@@ -79,7 +79,7 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
       entity.world.spawnParticle(
         Particle.BLOCK,
         entity.location,
-        10,
+        1,
         0.5, 0.5, 0.5,
         Material.REDSTONE_BLOCK.createBlockData()
       )

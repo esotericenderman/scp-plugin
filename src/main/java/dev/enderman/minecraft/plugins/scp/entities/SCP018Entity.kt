@@ -107,7 +107,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
       if (velocity == 0.0) {
         if (ticksStuck > 1) {
-          entity.world.createExplosion(entity.location, 0.5F * ticksStuck)
+          entity.world.createExplosion(entity.location, 1.0F + 0.25F * ticksStuck)
         }
 
         ticksStuck++

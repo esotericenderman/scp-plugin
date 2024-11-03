@@ -80,6 +80,8 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
       val scp018 = SCP018.entityMap[projectile]
       if (scp018 != null) {
         println("Found existing SCP-018 instance corresponding to projectile entity.")
+        println("Remove old entity instance from map.")
+        SCP018.entityMap.remove(projectile)
       } else {
         println("No SCP-018 instance found. It must be a newly thrown instance.")
       }

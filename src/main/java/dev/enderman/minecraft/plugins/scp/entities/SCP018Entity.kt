@@ -79,7 +79,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
       newVelocity.multiply(3F/2F)
       if (newVelocity.length() > velocityLimit) {
-        newVelocity.normalize().multiply(velocityLimit)
+        newVelocity.normalize().multiply(Math.min(velocityLimit, velocity.length()))
       }
 
       val newProjectile = createEntity(projectile.location, scp018)
@@ -93,8 +93,8 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
     private var ticksLived = 0
 
-    val speedLimit: Float
-      get() = ticksLived / 200.0F
+    val speedLimit: Double
+      get() = ticksLived / 200.0
 
     private var previousLocation: Vector = entity.location.toVector()
     private var ticksStuck: Int = 0

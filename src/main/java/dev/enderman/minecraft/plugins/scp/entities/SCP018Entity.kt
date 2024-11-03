@@ -4,7 +4,6 @@ import dev.enderman.minecraft.plugins.scp.SCPPlugin
 import dev.enderman.minecraft.plugins.scp.items.SCP018Item
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntity
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntityPlugin
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -33,10 +32,8 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
     entities.forEach {
       if (scp018 == null) {
-        println("Creating new SCP-018 instance.")
         SCP018(plugin, it)
       } else {
-        println("Updating SCP-018 instance Snowball entity.")
         SCP018.entityMap[it] = scp018
         scp018.entity = it
       }
@@ -79,11 +76,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
       val scp018 = SCP018.entityMap[projectile]
       if (scp018 != null) {
-        println("Found existing SCP-018 instance corresponding to projectile entity.")
-        println("Remove old entity instance from map.")
         SCP018.entityMap.remove(projectile)
-      } else {
-        println("No SCP-018 instance found. It must be a newly thrown instance.")
       }
 
       val newProjectile = createEntity(projectile.location, scp018)
@@ -105,13 +98,6 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
     }
 
     override fun run() {
-      println("Running SCP-018 runnable.")
-      println("Number of SCP-018 entities in the world: " + entityMap.size)
-
-      if (!entity.location.block.isEmpty) {
-        println("SCP-018 stuck in block! At tick " + Bukkit.getServer().currentTick)
-      }
-
       entity.world.spawnParticle(
         Particle.BLOCK,
         entity.location,

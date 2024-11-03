@@ -12,7 +12,6 @@ import org.bukkit.entity.Snowball
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.ProjectileHitEvent
 import org.bukkit.scheduler.BukkitRunnable
-import org.bukkit.util.Vector
 
 class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp_018", EntityType.SNOWBALL) {
 
@@ -26,7 +25,7 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
     val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
     entities.forEach { (it as Snowball).item = scpItem.createItem() }
 
-    SCP018Runnable(plugin as SCPPlugin, this as SCP018Entity<Snowball>).runTaskTimer(plugin, 0L, 1L)
+    SCP018Runnable(this as SCP018Entity<Snowball>).runTaskTimer(plugin, 0L, 1L)
 
     return entities
   }
@@ -67,16 +66,13 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
     }
   }
 
-  private class SCP018Runnable(private val plugin: SCPPlugin, private val scpEntity: SCP018Entity<Snowball>) : BukkitRunnable() {
-
-    private val previousPositionMap: MutableMap<Snowball, Vector> = HashMap()
+  private class SCP018Runnable(private val scpEntity: SCP018Entity<Snowball>) : BukkitRunnable() {
 
     override fun run() {
       scpEntity.allEntities.forEach {
         if (it.isDead) {
           cancel()
           scpEntity.allEntities.remove(it)
-          previousPositionMap.remove(it)
         }
 
         it.world.spawnParticle(
@@ -86,30 +82,6 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
           0.5, 0.5, 0.5,
           Material.REDSTONE_BLOCK.createBlockData()
         )
-
-        val previousPosition = previousPositionMap[it]
-        if (previousPosition == null) {
-          println("No previous position found")
-          previousPositionMap[it] = it.location.toVector()
-          return
-        }
-
-        val velocity = it.location.toVector().distance(previousPosition)
-
-        previousPositionMap[it] = it.location.toVector()
-
-        println("Velocity: " + velocity)
-        println("Is empty block: " + it.location.block.isEmpty)
-
-        if (velocity < 0.05F && !it.location.block.isEmpty) {
-          it.remove()
-          scpEntity.allEntities.remove(it)
-          previousPositionMap.remove(it)
-          cancel()
-
-          val scpItem = plugin.customItemManager.getItem("scp_018") as SCP018Item
-          it.world.dropItemNaturally(it.location, scpItem.createItem())
-        }
       }
     }
   }

@@ -103,7 +103,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
     override fun run() {
       val velocity = entity.location.distance(previousLocation)
 
-      if (velocity < 0.5F) {
+      if (velocity < 0.05F) {
         println("Low velocity detected! At tick " + Bukkit.getServer().currentTick)
         println("Velocity: $velocity")
       }

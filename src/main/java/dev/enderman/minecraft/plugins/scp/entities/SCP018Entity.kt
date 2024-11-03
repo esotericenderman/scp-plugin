@@ -135,7 +135,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
         entity.location,
         1,
         0.0, 0.0, 0.0,
-        Particle.DustTransition(Color.RED, Color.RED, 0.5F)
+        Particle.DustTransition(Color.RED, Color.RED, 0.75F)
       )
 
       previousLocation = entity.location.toVector()

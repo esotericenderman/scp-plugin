@@ -16,7 +16,7 @@ plugins {
 description = "A Minecraft Paper plugin that adds some SCPs to the game."
 
 group = "dev.enderman"
-version = "0.0.3"
+version = "0.0.4"
 
 val projectGroupString = group.toString()
 val projectVersionString = version.toString()

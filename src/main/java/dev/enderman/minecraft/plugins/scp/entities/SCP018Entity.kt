@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.CreatureSpawnEvent
 import org.bukkit.event.entity.ProjectileHitEvent
 import org.bukkit.scheduler.BukkitRunnable
+import org.bukkit.util.Vector
 
 class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018", EntityType.SNOWBALL) {
 
@@ -89,7 +90,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
   class SCP018(plugin: CustomEntityPlugin, var entity: Snowball) : BukkitRunnable() {
 
-    private var previousLocation: Location = entity.location
+    private var previousLocation: Vector = entity.location.toVector()
 
     companion object {
       val entityMap: MutableMap<Entity, SCP018> = mutableMapOf()
@@ -101,7 +102,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
     }
 
     override fun run() {
-      val velocity = entity.location.distance(previousLocation)
+      val velocity = entity.location.toVector().distance(previousLocation)
 
       if (velocity < 0.05F) {
         println("Low velocity detected! At tick " + Bukkit.getServer().currentTick)
@@ -116,7 +117,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
         Material.REDSTONE_BLOCK.createBlockData()
       )
 
-      previousLocation = entity.location
+      previousLocation = entity.location.toVector()
     }
   }
 }

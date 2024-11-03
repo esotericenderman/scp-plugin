@@ -91,7 +91,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
   class SCP018(plugin: CustomEntityPlugin, var entity: Snowball) : BukkitRunnable() {
 
     private var previousLocation: Vector = entity.location.toVector()
-    private var lastZeroVelocityTick: Int? = null
+    private var ticksStuck: Int = 0
 
     companion object {
       val entityMap: MutableMap<Entity, SCP018> = mutableMapOf()
@@ -106,12 +106,13 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
       val velocity = entity.location.toVector().distance(previousLocation)
 
       if (velocity == 0.0) {
-        val currentTick = Bukkit.getServer().currentTick
-        if (lastZeroVelocityTick == currentTick - 1) {
-          entity.world.createExplosion(entity.location, 1.5F)
+        if (ticksStuck > 1) {
+          entity.world.createExplosion(entity.location, 0.5F * ticksStuck)
         }
 
-        lastZeroVelocityTick = Bukkit.getServer().currentTick
+        ticksStuck++
+      } else {
+        ticksStuck = 0
       }
 
       if (velocity < 0.05F) {

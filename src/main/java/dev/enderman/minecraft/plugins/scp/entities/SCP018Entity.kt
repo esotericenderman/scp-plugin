@@ -105,6 +105,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
       if (velocity < 0.5F) {
         println("Low velocity detected! At tick " + Bukkit.getServer().currentTick)
+        println("Velocity: $velocity")
       }
 
       entity.world.spawnParticle(

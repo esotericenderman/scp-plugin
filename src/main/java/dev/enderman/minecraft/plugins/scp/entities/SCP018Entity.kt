@@ -77,9 +77,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
       }
 
       val scp018 = SCP018.entityMap[projectile]
-      if (scp018 != null) {
-        SCP018.entityMap.remove(projectile)
-      }
+      SCP018.entityMap.remove(projectile)
 
       val newProjectile = createEntity(projectile.location, scp018)
       newProjectile.velocity = newVelocity

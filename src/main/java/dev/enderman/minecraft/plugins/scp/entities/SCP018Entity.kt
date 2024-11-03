@@ -113,7 +113,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
       val velocity = entity.location.toVector().distance(previousLocation)
 
       if (velocity == 0.0) {
-        if (ticksStuck > 5) {
+        if (ticksStuck > 2) {
           val explosionPower = 1.0F + 0.25F * ticksStuck
 
           if (explosionPower >= 5F) {

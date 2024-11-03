@@ -4,6 +4,7 @@ import dev.enderman.minecraft.plugins.scp.SCPPlugin
 import dev.enderman.minecraft.plugins.scp.items.SCP018Item
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntity
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntityPlugin
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -88,16 +89,24 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
   class SCP018(plugin: CustomEntityPlugin, var entity: Snowball) : BukkitRunnable() {
 
+    private var previousLocation: Location = entity.location
+
     companion object {
       val entityMap: MutableMap<Entity, SCP018> = mutableMapOf()
     }
 
     init {
-        entityMap[entity] = this
+      entityMap[entity] = this
         runTaskTimer(plugin, 0L, 1L)
     }
 
     override fun run() {
+      val velocity = entity.location.distance(previousLocation)
+
+      if (velocity < 0.5F) {
+        println("Low velocity detected! At tick " + Bukkit.getServer().currentTick)
+      }
+
       entity.world.spawnParticle(
         Particle.BLOCK,
         entity.location,
@@ -105,6 +114,8 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
         0.5, 0.5, 0.5,
         Material.REDSTONE_BLOCK.createBlockData()
       )
+
+      previousLocation = entity.location
     }
   }
 }

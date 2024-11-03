@@ -3,6 +3,7 @@ package dev.enderman.minecraft.plugins.scp.entities
 import dev.enderman.minecraft.plugins.scp.SCPPlugin
 import dev.enderman.minecraft.plugins.scp.items.SCP018Item
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntity
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.entity.Entity
@@ -73,6 +74,10 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
         if (it.isDead) {
           cancel()
           scpEntity.allEntities.remove(it)
+        }
+
+        if (!it.location.block.isEmpty) {
+          println("SCP-018 stuck in block! At tick " + Bukkit.getServer().currentTick)
         }
 
         it.world.spawnParticle(

@@ -3,7 +3,9 @@ package dev.enderman.minecraft.plugins.scp.entities
 import dev.enderman.minecraft.plugins.scp.SCPPlugin
 import dev.enderman.minecraft.plugins.scp.items.SCP018Item
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntity
+import foundation.esoteric.minecraft.plugins.library.entity.CustomEntityPlugin
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.entity.Entity
@@ -11,22 +13,35 @@ import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Snowball
 import org.bukkit.event.EventHandler
+import org.bukkit.event.entity.CreatureSpawnEvent
 import org.bukkit.event.entity.ProjectileHitEvent
 import org.bukkit.scheduler.BukkitRunnable
 
 class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp_018", EntityType.SNOWBALL) {
 
-  private val allEntities: MutableList<Snowball> = mutableListOf()
+  fun createEntity(spawnLocation: Location, scp018: SCP018?): T {
+    return spawnLocation.world.spawnEntity(spawnLocation, EntityType.SNOWBALL, CreatureSpawnEvent.SpawnReason.DEFAULT) { entity ->
+      toEntity(
+        scp018,
+        entity as T,
+      )
+    } as T
+  }
 
-  override fun toEntity(vararg entities: T): Array<out T> {
+  fun toEntity(scp018: SCP018?, vararg entities: T): Array<out T> {
     super.toEntity(*entities)
 
-    entities.forEach { allEntities.add(it as Snowball) }
+    entities.forEach {
+      if (scp018 == null) {
+        SCP018(plugin, it as Snowball)
+      } else {
+        SCP018.entityMap[it] = scp018
+        scp018.entity = it as Snowball
+      }
+    }
 
     val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
     entities.forEach { (it as Snowball).item = scpItem.createItem() }
-
-    SCP018Runnable(this as SCP018Entity<Snowball>).runTaskTimer(plugin, 0L, 1L)
 
     return entities
   }
@@ -60,34 +75,38 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
         newVelocity.normalize().multiply(2F)
       }
 
-      val newProjectile = createEntity(projectile.location)
+      val scp018 = SCP018.entityMap[projectile]
+
+      val newProjectile = createEntity(projectile.location, scp018)
       newProjectile.velocity = newVelocity
 
       projectile.remove()
     }
   }
 
-  private class SCP018Runnable(private val scpEntity: SCP018Entity<Snowball>) : BukkitRunnable() {
+  class SCP018(plugin: CustomEntityPlugin, var entity: Snowball) : BukkitRunnable() {
+
+    companion object {
+      val entityMap: MutableMap<Entity, SCP018> = mutableMapOf()
+    }
+
+    init {
+        entityMap[entity] = this
+        runTaskTimer(plugin, 0L, 1L)
+    }
 
     override fun run() {
-      scpEntity.allEntities.forEach {
-        if (it.isDead) {
-          cancel()
-          scpEntity.allEntities.remove(it)
-        }
-
-        if (!it.location.block.isEmpty) {
-          println("SCP-018 stuck in block! At tick " + Bukkit.getServer().currentTick)
-        }
-
-        it.world.spawnParticle(
-          Particle.BLOCK,
-          it.location,
-          1,
-          0.5, 0.5, 0.5,
-          Material.REDSTONE_BLOCK.createBlockData()
-        )
+      if (!entity.location.block.isEmpty) {
+        println("SCP-018 stuck in block! At tick " + Bukkit.getServer().currentTick)
       }
+
+      entity.world.spawnParticle(
+        Particle.BLOCK,
+        entity.location,
+        1,
+        0.5, 0.5, 0.5,
+        Material.REDSTONE_BLOCK.createBlockData()
+      )
     }
   }
 }

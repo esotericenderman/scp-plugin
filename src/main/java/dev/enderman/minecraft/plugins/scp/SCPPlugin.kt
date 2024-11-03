@@ -30,7 +30,7 @@ class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin {
     CommandAPI.onLoad(commandAPIConfig)
     CommandAPI.onEnable()
 
-    SCP018Entity<Snowball>(this)
+    SCP018Entity(this)
     SCP018Item(this)
 
     ResourcePackManager(this)

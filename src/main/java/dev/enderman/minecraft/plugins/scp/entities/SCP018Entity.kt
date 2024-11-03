@@ -17,33 +17,33 @@ import org.bukkit.event.entity.CreatureSpawnEvent
 import org.bukkit.event.entity.ProjectileHitEvent
 import org.bukkit.scheduler.BukkitRunnable
 
-class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp_018", EntityType.SNOWBALL) {
+class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018", EntityType.SNOWBALL) {
 
-  fun createEntity(spawnLocation: Location, scp018: SCP018?): T {
+  fun createEntity(spawnLocation: Location, scp018: SCP018?): Snowball {
     return spawnLocation.world.spawnEntity(spawnLocation, EntityType.SNOWBALL, CreatureSpawnEvent.SpawnReason.DEFAULT) { entity ->
       toEntity(
         scp018,
-        entity as T,
+        entity as Snowball,
       )
-    } as T
+    } as Snowball
   }
 
-  fun toEntity(scp018: SCP018?, vararg entities: T): Array<out T> {
+  fun toEntity(scp018: SCP018?, vararg entities: Snowball): Array<out Snowball> {
     super.toEntity(*entities)
 
     entities.forEach {
       if (scp018 == null) {
         println("Creating new SCP-018 instance.")
-        SCP018(plugin, it as Snowball)
+        SCP018(plugin, it)
       } else {
         println("Updating SCP-018 instance Snowball entity.")
         SCP018.entityMap[it] = scp018
-        scp018.entity = it as Snowball
+        scp018.entity = it
       }
     }
 
     val scpItem = (plugin as SCPPlugin).customItemManager.getItem("scp_018") as SCP018Item
-    entities.forEach { (it as Snowball).item = scpItem.createItem() }
+    entities.forEach { it.item = scpItem.createItem() }
 
     return entities
   }

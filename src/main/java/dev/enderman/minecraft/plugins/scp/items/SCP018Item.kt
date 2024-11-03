@@ -27,7 +27,7 @@ class SCP018Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_018", Material.S
     val itemInMainHand = source.inventory.itemInMainHand
 
     if (isItem(itemInMainHand)) {
-      val scpEntity: SCP018Entity<Snowball> = (plugin as SCPPlugin).customEntityManager.getEntity("scp_018") as SCP018Entity<Snowball>
+      val scpEntity: SCP018Entity = (plugin as SCPPlugin).customEntityManager.getEntity("scp_018") as SCP018Entity
       scpEntity.toEntity(null, entity)
       entity.item = toItem(entity.item)
     }

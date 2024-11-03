@@ -99,7 +99,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
     init {
       entityMap[entity] = this
-        runTaskTimer(plugin, 0L, 1L)
+      runTaskTimer(plugin, 0L, 1L)
     }
 
     override fun run() {

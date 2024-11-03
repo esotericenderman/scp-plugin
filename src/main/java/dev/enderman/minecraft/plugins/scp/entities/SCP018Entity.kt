@@ -71,13 +71,16 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
       val velocity = projectile.velocity
       val newVelocity = velocity.subtract(normalVector.multiply(2.0F * velocity.dot(normalVector)))
-      newVelocity.multiply(3F/2F)
-      if (newVelocity.length() > 5F) {
-        newVelocity.normalize().multiply(5F)
-      }
 
-      val scp018 = SCP018.entityMap[projectile]
+      val scp018 = SCP018.entityMap[projectile]!!
       SCP018.entityMap.remove(projectile)
+
+      val velocityLimit = scp018.speedLimit
+
+      newVelocity.multiply(3F/2F)
+      if (newVelocity.length() > velocityLimit) {
+        newVelocity.normalize().multiply(velocityLimit)
+      }
 
       val newProjectile = createEntity(projectile.location, scp018)
       newProjectile.velocity = newVelocity
@@ -87,6 +90,11 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
   }
 
   class SCP018(plugin: CustomEntityPlugin, var entity: Snowball) : BukkitRunnable() {
+
+    private var ticksLived = 0
+
+    val speedLimit: Float
+      get() = ticksLived / 1000.0F
 
     private var previousLocation: Vector = entity.location.toVector()
     private var ticksStuck: Int = 0
@@ -101,6 +109,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
     }
 
     override fun run() {
+      ticksLived++
       val velocity = entity.location.toVector().distance(previousLocation)
 
       if (velocity == 0.0) {

@@ -103,9 +103,11 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
     }
 
     override fun run() {
+      println("Running SCP-018 runnable.")
+      println("Number of SCP-018 entities in the world: " + entityMap.size)
+
       if (!entity.location.block.isEmpty) {
         println("SCP-018 stuck in block! At tick " + Bukkit.getServer().currentTick)
-        println("Number of SCP-018 entities in the world: " + entityMap.size)
       }
 
       entity.world.spawnParticle(

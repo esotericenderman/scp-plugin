@@ -94,7 +94,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
     private var ticksLived = 0
 
     val speedLimit: Float
-      get() = ticksLived / 1000.0F
+      get() = ticksLived / 200.0F
 
     private var previousLocation: Vector = entity.location.toVector()
     private var ticksStuck: Int = 0

@@ -72,8 +72,8 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
       val velocity = projectile.velocity
       val newVelocity = velocity.subtract(normalVector.multiply(2.0F * velocity.dot(normalVector)))
       newVelocity.multiply(3F/2F)
-      if (newVelocity.length() > 2F) {
-        newVelocity.normalize().multiply(2F)
+      if (newVelocity.length() > 5F) {
+        newVelocity.normalize().multiply(5F)
       }
 
       val scp018 = SCP018.entityMap[projectile]

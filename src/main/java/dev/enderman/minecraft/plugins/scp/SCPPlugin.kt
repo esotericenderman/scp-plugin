@@ -10,7 +10,6 @@ import foundation.esoteric.minecraft.plugins.library.entity.CustomEntityPlugin
 import foundation.esoteric.minecraft.plugins.library.item.CustomItemManager
 import foundation.esoteric.minecraft.plugins.library.item.CustomItemPlugin
 import foundation.esoteric.minecraft.plugins.library.pack.resource.ResourcePackManager
-import org.bukkit.entity.Snowball
 import org.bukkit.plugin.java.JavaPlugin
 
 class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin {

@@ -134,7 +134,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
         Particle.DUST_COLOR_TRANSITION,
         entity.location,
         1,
-        0.5, 0.5, 0.5,
+        0.0, 0.0, 0.0,
         Particle.DustTransition(Color.RED, Color.RED, 0.5F)
       )
 

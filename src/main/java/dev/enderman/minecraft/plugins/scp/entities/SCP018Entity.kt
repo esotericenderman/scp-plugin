@@ -33,8 +33,10 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
 
     entities.forEach {
       if (scp018 == null) {
+        println("Creating new SCP-018 instance.")
         SCP018(plugin, it as Snowball)
       } else {
+        println("Updating SCP-018 instance Snowball entity.")
         SCP018.entityMap[it] = scp018
         scp018.entity = it as Snowball
       }
@@ -76,6 +78,11 @@ class SCP018Entity<T : Entity>(plugin: SCPPlugin) : CustomEntity<T>(plugin, "scp
       }
 
       val scp018 = SCP018.entityMap[projectile]
+      if (scp018 != null) {
+        println("Found existing SCP-018 instance corresponding to projectile entity.")
+      } else {
+        println("No SCP-018 instance found. It must be a newly thrown instance.")
+      }
 
       val newProjectile = createEntity(projectile.location, scp018)
       newProjectile.velocity = newVelocity

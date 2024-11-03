@@ -79,7 +79,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
       newVelocity.multiply(3F/2F)
       if (newVelocity.length() > velocityLimit) {
-        newVelocity.normalize().multiply(velocityLimit.coerceAtMost(velocity.length()))
+        newVelocity.normalize().multiply(velocityLimit.coerceAtLeast(velocity.length()))
       }
 
       val newProjectile = createEntity(projectile.location, scp018)

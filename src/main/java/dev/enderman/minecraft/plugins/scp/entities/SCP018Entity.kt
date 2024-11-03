@@ -5,6 +5,7 @@ import dev.enderman.minecraft.plugins.scp.items.SCP018Item
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntity
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntityPlugin
 import org.bukkit.Bukkit
+import org.bukkit.Color
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -130,11 +131,11 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
       }
 
       entity.world.spawnParticle(
-        Particle.BLOCK,
+        Particle.DUST_COLOR_TRANSITION,
         entity.location,
         1,
         0.5, 0.5, 0.5,
-        Material.REDSTONE_BLOCK.createBlockData()
+        Particle.DustTransition(Color.RED, Color.RED, 0.5F)
       )
 
       previousLocation = entity.location.toVector()

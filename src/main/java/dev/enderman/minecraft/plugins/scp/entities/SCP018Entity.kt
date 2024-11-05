@@ -102,7 +102,10 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
       }
 
     val speedLimit: Double
-      get() = entity.velocity.length() + (ticksLived / 500).coerceAtLeast(collisionCount / 20)
+      get() = (ticksLived / 200.0).coerceAtLeast(collisionCount / 10.0)
+
+    private val explosionCooldownTicks = 5
+    private var ticksSinceLastExplosion = explosionCooldownTicks + 1
 
     private var previousLocation: Vector = entity.location.toVector()
     private var ticksStuck: Int = 0
@@ -118,6 +121,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
     override fun run() {
       ticksLived++
+      ticksSinceLastExplosion++
       val velocity = entity.location.toVector().distance(previousLocation)
 
       if (velocity == 0.0) {
@@ -129,7 +133,11 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
             return
           }
 
-          entity.world.createExplosion(entity.location, explosionPower)
+
+          if (ticksSinceLastExplosion >= explosionCooldownTicks) {
+            entity.world.createExplosion(entity.location, explosionPower)
+            ticksSinceLastExplosion = 0
+          }
         }
 
         ticksStuck++

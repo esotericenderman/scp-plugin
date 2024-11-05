@@ -4,10 +4,8 @@ import dev.enderman.minecraft.plugins.scp.SCPPlugin
 import dev.enderman.minecraft.plugins.scp.items.SCP018Item
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntity
 import foundation.esoteric.minecraft.plugins.library.entity.CustomEntityPlugin
-import org.bukkit.Bukkit
 import org.bukkit.Color
 import org.bukkit.Location
-import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType

@@ -19,7 +19,7 @@ import org.bukkit.util.Vector
 
 class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018", EntityType.SNOWBALL) {
 
-  fun createEntity(spawnLocation: Location, scp018: SCP018?): Snowball {
+  private fun createEntity(spawnLocation: Location, scp018: SCP018?): Snowball {
     return spawnLocation.world.spawnEntity(spawnLocation, EntityType.SNOWBALL, CreatureSpawnEvent.SpawnReason.DEFAULT) { entity ->
       toEntity(
         scp018,

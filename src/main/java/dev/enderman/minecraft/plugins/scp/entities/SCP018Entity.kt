@@ -22,7 +22,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
   companion object {
     private const val SPEED_INCREASE = 1.5
     private const val DAMAGE_PER_VELOCITY = 5.0
-    private const val MAX_EXPLOSION_POWER = 5.0
+    private const val MAX_EXPLOSION_POWER = 10.0
   }
 
   private fun createEntity(spawnLocation: Location, scp018: SCP018?): Snowball {

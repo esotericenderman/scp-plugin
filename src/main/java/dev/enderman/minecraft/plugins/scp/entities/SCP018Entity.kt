@@ -73,6 +73,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
       val scp018 = SCP018.entityMap[projectile]!!
       SCP018.entityMap.remove(projectile)
+      scp018.collisionCount++
 
       val velocityLimit = scp018.speedLimit
 
@@ -91,9 +92,17 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
   class SCP018(plugin: CustomEntityPlugin, var entity: Snowball) : BukkitRunnable() {
 
     private var ticksLived = 0
+    var collisionCount: Int = 0
+      set(value) {
+        if (value != collisionCount + 1) {
+          throw IllegalArgumentException("Can only increment collision count by 1.")
+        }
+
+        field = value
+      }
 
     val speedLimit: Double
-      get() = ticksLived / 1000.0
+      get() = entity.velocity.length() + (ticksLived / 500).coerceAtLeast(collisionCount / 20)
 
     private var previousLocation: Vector = entity.location.toVector()
     private var ticksStuck: Int = 0

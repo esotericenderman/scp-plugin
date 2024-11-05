@@ -19,6 +19,12 @@ import org.bukkit.util.Vector
 
 class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018", EntityType.SNOWBALL) {
 
+  companion object {
+    private const val SPEED_INCREASE = 1.5
+    private const val DAMAGE_PER_VELOCITY = 5.0
+    private const val MAX_EXPLOSION_POWER = 5.0
+  }
+
   private fun createEntity(spawnLocation: Location, scp018: SCP018?): Snowball {
     return spawnLocation.world.spawnEntity(spawnLocation, EntityType.SNOWBALL, CreatureSpawnEvent.SpawnReason.DEFAULT) { entity ->
       toEntity(
@@ -60,7 +66,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
     if (hitEntity != null) {
       if (hitEntity is LivingEntity) {
-        hitEntity.damage(projectile.velocity.length() * 5.0F)
+        hitEntity.damage(projectile.velocity.length() * DAMAGE_PER_VELOCITY)
       }
     }
 
@@ -77,7 +83,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
 
       val velocityLimit = scp018.speedLimit
 
-      newVelocity.multiply(3F/2F)
+      newVelocity.multiply(SPEED_INCREASE)
       if (newVelocity.length() > velocityLimit) {
         newVelocity.normalize().multiply(velocityLimit.coerceAtLeast(velocity.length()))
       }
@@ -128,7 +134,7 @@ class SCP018Entity(plugin: SCPPlugin) : CustomEntity<Snowball>(plugin, "scp_018"
         if (ticksStuck > 2) {
           val explosionPower = 1.0F + 0.25F * ticksStuck
 
-          if (explosionPower >= 5F) {
+          if (explosionPower >= MAX_EXPLOSION_POWER) {
             die()
             return
           }

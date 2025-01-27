@@ -37,6 +37,8 @@ java {
 repositories {
   mavenCentral()
   maven("https://www.jitpack.io")
+
+  maven("https://repo.flyte.gg/releases")
 }
 
 dependencies {
@@ -46,6 +48,7 @@ dependencies {
   implementation("net.lingala.zip4j", "zip4j", "2.11.5")
   implementation("com.github.EsotericFoundation:utility.kt:1.1.1")
   implementation("com.github.EsotericFoundation:plugin-library:0.8.1")
+  implementation("gg.flyte:twilight:1.1.17")
   implementation(kotlin("stdlib-jdk8"))
 }
 

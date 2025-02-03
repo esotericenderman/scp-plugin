@@ -6,11 +6,17 @@ import foundation.esoteric.minecraft.plugins.library.item.TexturedItem
 import gg.flyte.twilight.extension.hidePlayer
 import gg.flyte.twilight.extension.showPlayer
 import org.bukkit.Material
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Mob
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+
+val unaffectedEntities = listOfNotNull<EntityType>(
+  EntityType.WARDEN,
+  EntityType.ZOMBIE
+)
 
 class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.LEATHER_HELMET) {
   @EventHandler
@@ -38,6 +44,8 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
       for (entity in player.world.livingEntities) {
         if (entity !is Mob) continue
 
+        if (unaffectedEntities.contains(entity.type)) continue
+
         if (entity.target != player) continue
 
         entity.target = null
@@ -63,6 +71,10 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
 
   @EventHandler
   private fun onMobTarget(event: EntityTargetLivingEntityEvent) {
+    val hostile = event.entity
+
+    if (unaffectedEntities.contains(hostile.type)) return
+
     val target = event.target ?: return
 
     val equipment = target.equipment ?: return

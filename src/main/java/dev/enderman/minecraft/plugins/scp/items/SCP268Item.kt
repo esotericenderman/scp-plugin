@@ -18,6 +18,15 @@ val unaffectedEntities = listOfNotNull(
   EntityType.ZOMBIE
 )
 
+/**
+ * Entities in this list would be able to see the player after they put on SCP-268, but only in the case that they were already attacking them.
+ *
+ * However, they won't be able to notice a player if they haven't noticed them already.
+ */
+val lessAffectedEntities = listOfNotNull(
+  EntityType.SHULKER
+)
+
 class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.LEATHER_HELMET) {
   @EventHandler
   private fun onEquip(event: PlayerArmorChangeEvent) {
@@ -44,7 +53,7 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
       for (entity in player.world.livingEntities) {
         if (entity !is Mob) continue
 
-        if (unaffectedEntities.contains(entity.type)) continue
+        if (unaffectedEntities.contains(entity.type) || lessAffectedEntities.contains(entity.type)) continue
 
         if (entity.target != player) continue
 

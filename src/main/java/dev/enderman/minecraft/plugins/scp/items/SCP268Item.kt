@@ -5,12 +5,15 @@ import dev.enderman.minecraft.plugins.scp.SCPPlugin
 import foundation.esoteric.minecraft.plugins.library.item.TexturedItem
 import gg.flyte.twilight.extension.hidePlayer
 import gg.flyte.twilight.extension.showPlayer
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Mob
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent
+import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.persistence.PersistentDataType
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
@@ -81,6 +84,8 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
       )
     )
 
+    player.persistentDataContainer[timeHatPutOnKey, PersistentDataType.INTEGER] = Bukkit.getServer().currentTick
+
     for (entity in player.world.livingEntities) {
       if (entity !is Mob) continue
 
@@ -108,6 +113,16 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
     player.removePotionEffect(
       PotionEffectType.INVISIBILITY
     )
+
+    val timePutOn = player.persistentDataContainer[timeHatPutOnKey, PersistentDataType.INTEGER]!!
+    val currentTime = Bukkit.getServer().currentTick
+
+    val difference = currentTime - timePutOn
+
+    var timeWorn = player.persistentDataContainer[timeHatWornKey, PersistentDataType.INTEGER] ?: 0
+    timeWorn += difference
+
+    player.persistentDataContainer[timeHatPutOnKey, PersistentDataType.INTEGER] = timeWorn
   }
 
   @EventHandler
@@ -127,5 +142,17 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
     if (!isItem(helmet)) return
 
     event.isCancelled = true
+  }
+
+  @EventHandler
+  private fun onJoinWithoutHatData(event: PlayerJoinEvent) {
+    val player = event.player
+    val dataContainer = player.persistentDataContainer
+
+    val timePutOn = dataContainer[timeHatPutOnKey, PersistentDataType.INTEGER]
+
+    if (timePutOn != null) return
+
+    dataContainer[timeHatPutOnKey, PersistentDataType.INTEGER] = Bukkit.getServer().currentTick
   }
 }

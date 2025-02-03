@@ -18,7 +18,6 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
     val player = event.player
 
     val newItem = event.newItem
-    val oldItem = event.oldItem
 
     if (isItem(newItem)) {
       plugin.logger.info("[SCP-268] The player has put on the hat... now invisible.")
@@ -44,6 +43,12 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
         entity.target = null
       }
     }
+  }
+
+  @EventHandler
+  private fun onUnEquip(event: PlayerArmorChangeEvent) {
+    val player = event.player
+    val oldItem = event.oldItem
 
     if (isItem(oldItem)) {
       plugin.logger.info("[SCP-268] The player has taken off the hat... now visible.")

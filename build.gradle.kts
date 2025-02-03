@@ -1,5 +1,8 @@
 import xyz.jpenilla.resourcefactory.bukkit.BukkitPluginYaml
 
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+
 plugins {
   java
   `java-library`
@@ -93,4 +96,33 @@ publishing {
 
 tasks.named("publishMavenJavaPublicationToMavenLocal") {
   dependsOn(tasks.named("build"))
+}
+
+val serverPropertiesFile = layout.projectDirectory.file("run/server.properties")
+val backupPropertiesFile = layout.buildDirectory.file("server.properties.backup")
+
+tasks.register("backupServerProperties") {
+  doLast {
+    val source = serverPropertiesFile.asFile
+    val destination = backupPropertiesFile.get().asFile
+    if (source.exists()) {
+      Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING)
+      println("Backed up server.properties to build directory.")
+    }
+  }
+}
+
+tasks.register("restoreServerProperties") {
+  doLast {
+    val source = backupPropertiesFile.get().asFile
+    val destination = serverPropertiesFile.asFile
+    if (source.exists()) {
+      Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING)
+    }
+  }
+}
+
+tasks.named("runServer") {
+  dependsOn("backupServerProperties")
+  finalizedBy("restoreServerProperties")
 }

@@ -7,6 +7,7 @@ import gg.flyte.twilight.extension.hidePlayer
 import gg.flyte.twilight.extension.showPlayer
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
@@ -44,5 +45,18 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
         PotionEffectType.INVISIBILITY
       )
     }
+  }
+
+  @EventHandler
+  private fun onMobTarget(event: EntityTargetLivingEntityEvent) {
+    val target = event.target ?: return
+
+    val equipment = target.equipment ?: return
+
+    val helmet = equipment.helmet
+
+    if (!isItem(helmet)) return
+
+    event.isCancelled = true
   }
 }

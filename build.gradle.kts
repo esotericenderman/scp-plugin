@@ -47,7 +47,7 @@ dependencies {
   implementation("dev.jorel", "commandapi-bukkit-shade-mojang-mapped", "9.5.3")
   implementation("net.lingala.zip4j", "zip4j", "2.11.5")
   implementation("com.github.EsotericFoundation:utility.kt:1.1.1")
-  implementation("com.github.EsotericFoundation:plugin-library:0.8.1")
+  implementation("com.github.EsotericFoundation:plugin-library:0.8.2")
   implementation("gg.flyte:twilight:1.1.17")
   implementation(kotlin("stdlib-jdk8"))
 }

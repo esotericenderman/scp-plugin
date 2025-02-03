@@ -2,6 +2,8 @@
 
 <sup>Generated from <a href="https://github.com/esoterictemplates/old-paper-template-plugin">esoterictemplates/old-paper-template-plugin</a></sup>
 
+[![Project Status: Abandoned](./assets/images/badges/status.svg)](./)
+
 > A Minecraft Paper plugin that adds some SCPs to the game.
 
 ## Credits

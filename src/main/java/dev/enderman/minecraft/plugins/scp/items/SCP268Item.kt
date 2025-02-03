@@ -9,6 +9,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.EntityType
+import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Mob
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent
@@ -16,6 +17,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import kotlin.math.pow
 
 private val unaffectedEntities = listOfNotNull(
   EntityType.WARDEN,
@@ -56,10 +58,22 @@ private val confusedEntities = listOfNotNull(
   EntityType.SPIDER
 )
 
+private const val TWENTY_MINECRAFT_HOURS_IN_TICKS = 20_000
+private const val INFINITE_LINGER_DURATION_IN_TICKS = 60_000
+private const val INFINITE_LINGER_DURATION = -1.0
+
+/**
+ A formula to calculate how long the effect should linger
+ based on how long someone has worn the hat:
+
+ 1000000000000 / (t-60000)^2 where t is in ticks that has been worn, and the output is how long in ticks the effect should linger, eventually becoming permanent.
+ */
+
 class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.LEATHER_HELMET) {
 
   private val timeHatPutOnKey = NamespacedKey(plugin, "time_scp_268_put_on")
   private val timeHatWornKey = NamespacedKey(plugin, "time_worn_scp_268")
+  private val lingerTimeExpirationKey = NamespacedKey(plugin, "scp_268_linger_expiration")
 
   @EventHandler
   private fun onEquip(event: PlayerArmorChangeEvent) {
@@ -120,9 +134,12 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
     val difference = currentTime - timePutOn
 
     var timeWorn = player.persistentDataContainer[timeHatWornKey, PersistentDataType.INTEGER] ?: 0
+
     timeWorn += difference
 
     player.persistentDataContainer[timeHatPutOnKey, PersistentDataType.INTEGER] = timeWorn
+
+    if (timeWorn >= TWENTY_MINECRAFT_HOURS_IN_TICKS) makeEffectLinger(player, timeWorn)
   }
 
   @EventHandler
@@ -139,9 +156,12 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
 
     val helmet = equipment.helmet
 
-    if (!isItem(helmet)) return
+    val lingerExpiry = target.persistentDataContainer[lingerTimeExpirationKey, PersistentDataType.DOUBLE] ?: 0.0
+    val currentTick = Bukkit.getServer().currentTick.toDouble()
 
-    event.isCancelled = true
+    if (isItem(helmet) || lingerExpiry > currentTick || lingerExpiry == INFINITE_LINGER_DURATION) {
+      event.isCancelled = true
+    }
   }
 
   @EventHandler
@@ -154,5 +174,13 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
     if (timePutOn != null) return
 
     dataContainer[timeHatPutOnKey, PersistentDataType.INTEGER] = Bukkit.getServer().currentTick
+  }
+
+  private fun makeEffectLinger(entity: LivingEntity, timeWorn: Int) {
+    val lingerTime = if (timeWorn >= INFINITE_LINGER_DURATION_IN_TICKS) INFINITE_LINGER_DURATION else 1000000000000.0 / (timeWorn.toDouble() - 60000.0).pow(2.0)
+
+    val currentTick = Bukkit.getServer().currentTick.toDouble()
+
+    entity.persistentDataContainer[lingerTimeExpirationKey, PersistentDataType.DOUBLE] = if (lingerTime == INFINITE_LINGER_DURATION) INFINITE_LINGER_DURATION else currentTick + lingerTime
   }
 }

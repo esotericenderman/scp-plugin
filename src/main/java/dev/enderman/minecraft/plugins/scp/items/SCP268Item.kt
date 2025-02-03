@@ -34,7 +34,8 @@ val lessAffectedEntities = listOfNotNull(
  */
 val confusedEntities = listOfNotNull(
   EntityType.ZOMBIE,
-  EntityType.IRON_GOLEM
+  EntityType.IRON_GOLEM,
+  EntityType.ZOMBIFIED_PIGLIN
 )
 
 class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.LEATHER_HELMET) {

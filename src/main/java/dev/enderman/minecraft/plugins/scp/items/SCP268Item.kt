@@ -17,6 +17,7 @@ private val unaffectedEntities = listOfNotNull(
   EntityType.WARDEN,
   EntityType.ENDERMAN,
   EntityType.GUARDIAN,
+  EntityType.ILLUSIONER,
   EntityType.ELDER_GUARDIAN,
 )
 
@@ -34,6 +35,17 @@ private val lessAffectedEntities = listOfNotNull(
  */
 private val confusedEntities = listOfNotNull(
   EntityType.ZOMBIE,
+  EntityType.ZOMBIE,
+  EntityType.HUSK,
+  EntityType.ZOMBIE_VILLAGER,
+  EntityType.ZOMBIE_HORSE,
+  EntityType.GIANT,
+  EntityType.CAT,
+  EntityType.WOLF,
+  EntityType.EVOKER,
+  EntityType.POLAR_BEAR,
+  EntityType.HOGLIN,
+  EntityType.FOX,
   EntityType.IRON_GOLEM,
   EntityType.ZOMBIFIED_PIGLIN,
   EntityType.CAVE_SPIDER,

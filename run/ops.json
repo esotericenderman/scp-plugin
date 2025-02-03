@@ -1,9 +1,15 @@
 [
   {
-    "uuid": "6a6b1dd1-0a91-321d-9005-4ab5255710ca",
+    "uuid": "fb00b39b-991c-4bcf-8089-bf02a6890060",
     "name": "esotericenderman",
     "level": 4,
-    "bypassesPlayerLimit": true
+    "bypassesPlayerLimit": false
+  },
+  {
+    "uuid": "ce6cc4ca-4bc1-4926-8d5d-79d4a825dfa8",
+    "name": "EsotericFndation",
+    "level": 4,
+    "bypassesPlayerLimit": false
   },
   {
     "uuid": "e89cf95b-7139-411b-8a7b-7f2bbc133ec8",

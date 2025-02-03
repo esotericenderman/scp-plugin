@@ -19,7 +19,7 @@ class SCPPlugin : JavaPlugin(), CustomItemPlugin, CustomEntityPlugin {
   override lateinit var customItemManager: CustomItemManager
   override lateinit var customEntityManager: CustomEntityManager
 
-  lateinit var twilight: Twilight
+  private lateinit var twilight: Twilight
 
   override fun onEnable() {
     customItemManager = CustomItemManager(this)

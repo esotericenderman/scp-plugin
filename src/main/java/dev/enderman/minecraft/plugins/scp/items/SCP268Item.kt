@@ -6,6 +6,7 @@ import foundation.esoteric.minecraft.plugins.library.item.TexturedItem
 import gg.flyte.twilight.extension.hidePlayer
 import gg.flyte.twilight.extension.showPlayer
 import org.bukkit.Material
+import org.bukkit.entity.Mob
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent
 import org.bukkit.potion.PotionEffect
@@ -34,6 +35,14 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
           false
         )
       )
+
+      for (entity in player.world.livingEntities) {
+        if (entity !is Mob) continue
+
+        if (entity.target != player) continue
+
+        entity.target = null
+      }
     }
 
     if (isItem(oldItem)) {

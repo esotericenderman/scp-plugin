@@ -15,7 +15,10 @@ import org.bukkit.potion.PotionEffectType
 
 val unaffectedEntities = listOfNotNull(
   EntityType.WARDEN,
-  EntityType.ZOMBIE
+  EntityType.ZOMBIE,
+  EntityType.ENDERMAN,
+  EntityType.GUARDIAN,
+  EntityType.ELDER_GUARDIAN,
 )
 
 /**

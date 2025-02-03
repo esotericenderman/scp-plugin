@@ -6,6 +6,7 @@ import foundation.esoteric.minecraft.plugins.library.item.TexturedItem
 import gg.flyte.twilight.extension.hidePlayer
 import gg.flyte.twilight.extension.showPlayer
 import org.bukkit.Material
+import org.bukkit.NamespacedKey
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Mob
 import org.bukkit.event.EventHandler
@@ -53,6 +54,10 @@ private val confusedEntities = listOfNotNull(
 )
 
 class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.LEATHER_HELMET) {
+
+  private val timeHatPutOnKey = NamespacedKey(plugin, "time_scp_268_put_on")
+  private val timeHatWornKey = NamespacedKey(plugin, "time_worn_scp_268")
+
   @EventHandler
   private fun onEquip(event: PlayerArmorChangeEvent) {
     val player = event.player
@@ -78,7 +83,6 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
 
     for (entity in player.world.livingEntities) {
       if (entity !is Mob) continue
-
 
       if (confusedEntities.contains(entity.type) && Math.random() > 0.75) return
 

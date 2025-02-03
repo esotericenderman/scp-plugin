@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityTargetLivingEntityEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
-val unaffectedEntities = listOfNotNull(
+private val unaffectedEntities = listOfNotNull(
   EntityType.WARDEN,
   EntityType.ENDERMAN,
   EntityType.GUARDIAN,
@@ -25,14 +25,14 @@ val unaffectedEntities = listOfNotNull(
  *
  * However, they won't be able to notice a player if they haven't noticed them already.
  */
-val lessAffectedEntities = listOfNotNull(
+private val lessAffectedEntities = listOfNotNull(
   EntityType.SHULKER
 )
 
 /**
  * These entities have methods of sensing the player other than sight, meaning SCP-268 might confuse them and disorient them, but ultimately they still might be able to sense the player through their other means.
  */
-val confusedEntities = listOfNotNull(
+private val confusedEntities = listOfNotNull(
   EntityType.ZOMBIE,
   EntityType.IRON_GOLEM,
   EntityType.ZOMBIFIED_PIGLIN

@@ -59,34 +59,34 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
 
     val newItem = event.newItem
 
-    if (isItem(newItem)) {
-      plugin.logger.info("[SCP-268] The player has put on the hat... now invisible.")
-      player.hidePlayer(plugin, player)
-      player.hidePlayer()
+    if (!isItem(newItem)) return
 
-      player.addPotionEffect(
-        PotionEffect(
-          PotionEffectType.INVISIBILITY,
-          PotionEffect.INFINITE_DURATION,
-          1,
-          false,
-          false,
-          false
-        )
+    plugin.logger.info("[SCP-268] The player has put on the hat... now invisible.")
+    player.hidePlayer(plugin, player)
+    player.hidePlayer()
+
+    player.addPotionEffect(
+      PotionEffect(
+        PotionEffectType.INVISIBILITY,
+        PotionEffect.INFINITE_DURATION,
+        1,
+        false,
+        false,
+        false
       )
+    )
 
-      for (entity in player.world.livingEntities) {
-        if (entity !is Mob) continue
+    for (entity in player.world.livingEntities) {
+      if (entity !is Mob) continue
 
 
-        if (confusedEntities.contains(entity.type) && Math.random() > 0.75) return
+      if (confusedEntities.contains(entity.type) && Math.random() > 0.75) return
 
-        if (unaffectedEntities.contains(entity.type) || lessAffectedEntities.contains(entity.type)) continue
+      if (unaffectedEntities.contains(entity.type) || lessAffectedEntities.contains(entity.type)) continue
 
-        if (entity.target != player) continue
+      if (entity.target != player) continue
 
-        entity.target = null
-      }
+      entity.target = null
     }
   }
 
@@ -95,15 +95,15 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
     val player = event.player
     val oldItem = event.oldItem
 
-    if (isItem(oldItem)) {
-      plugin.logger.info("[SCP-268] The player has taken off the hat... now visible.")
-      player.showPlayer(plugin, player)
-      player.showPlayer()
+    if (!isItem(oldItem)) return
 
-      player.removePotionEffect(
-        PotionEffectType.INVISIBILITY
-      )
-    }
+    plugin.logger.info("[SCP-268] The player has taken off the hat... now visible.")
+    player.showPlayer(plugin, player)
+    player.showPlayer()
+
+    player.removePotionEffect(
+      PotionEffectType.INVISIBILITY
+    )
   }
 
   @EventHandler

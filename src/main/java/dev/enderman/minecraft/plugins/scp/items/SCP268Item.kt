@@ -15,7 +15,6 @@ import org.bukkit.potion.PotionEffectType
 
 val unaffectedEntities = listOfNotNull(
   EntityType.WARDEN,
-  EntityType.ZOMBIE,
   EntityType.ENDERMAN,
   EntityType.GUARDIAN,
   EntityType.ELDER_GUARDIAN,
@@ -28,6 +27,14 @@ val unaffectedEntities = listOfNotNull(
  */
 val lessAffectedEntities = listOfNotNull(
   EntityType.SHULKER
+)
+
+/**
+ * These entities have methods of sensing the player other than sight, meaning SCP-268 might confuse them and disorient them, but ultimately they still might be able to sense the player through their other means.
+ */
+val confusedEntities = listOfNotNull(
+  EntityType.ZOMBIE,
+  EntityType.IRON_GOLEM
 )
 
 class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.LEATHER_HELMET) {
@@ -55,6 +62,9 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
 
       for (entity in player.world.livingEntities) {
         if (entity !is Mob) continue
+
+
+        if (confusedEntities.contains(entity.type) && Math.random() > 0.75) return
 
         if (unaffectedEntities.contains(entity.type) || lessAffectedEntities.contains(entity.type)) continue
 
@@ -84,6 +94,8 @@ class SCP268Item(plugin: SCPPlugin) : TexturedItem(plugin, "scp_268", Material.L
   @EventHandler
   private fun onMobTarget(event: EntityTargetLivingEntityEvent) {
     val hostile = event.entity
+
+    if (confusedEntities.contains(hostile.type) && Math.random() > 0.5) return
 
     if (unaffectedEntities.contains(hostile.type)) return
 

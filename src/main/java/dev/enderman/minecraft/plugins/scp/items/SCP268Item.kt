@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityTargetLivingEntityEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
-val unaffectedEntities = listOfNotNull<EntityType>(
+val unaffectedEntities = listOfNotNull(
   EntityType.WARDEN,
   EntityType.ZOMBIE
 )

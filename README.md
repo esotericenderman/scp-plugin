@@ -18,4 +18,4 @@ See [full credits](https://github.com/esotericenderman/scp-resource-pack/tree/ma
 
 ## Topics
 
-plugin minecraft scp minecraft-plugin scp-foundation paper-plugin minecraft-plugins papermc-plugin scps minecraft-paper paper-plugins minecraft-paper-plugin minecraft-paper-plugins minecraft-papermc-plugin minecraft-papermc scp-018 scp-268 minecraft-scp scp-minecraft minecraft-scp-plugin
+<sup>plugin minecraft scp minecraft-plugin scp-foundation paper-plugin minecraft-plugins papermc-plugin scps minecraft-paper paper-plugins minecraft-paper-plugin minecraft-paper-plugins minecraft-papermc-plugin minecraft-papermc scp-018 scp-268 minecraft-scp scp-minecraft minecraft-scp-plugin</sup>

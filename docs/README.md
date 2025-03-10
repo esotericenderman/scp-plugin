@@ -14,7 +14,7 @@ See [full credits](https://github.com/esotericenderman/scp-resource-pack/tree/ma
 
 &copy; 2024-2025 [Esoteric Enderman](https://enderman.dev)
 
-[SCP Plugin](./) is licensed under [CC BY-SA 3.0](./LICENSE).
+[SCP Plugin](./) is licensed under [CC BY-SA 3.0](../LICENSE).
 
 ## Topics
 
